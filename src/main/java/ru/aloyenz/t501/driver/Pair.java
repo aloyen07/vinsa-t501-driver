@@ -1,4 +1,4 @@
 package ru.aloyenz.t501.driver;
 
-public class Pair {
+public record Pair<F, S>(F first, S second) {
 }

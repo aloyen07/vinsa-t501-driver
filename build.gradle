@@ -4,6 +4,7 @@ plugins {
 
 group = 'ru.aloyenz.t501.driver'
 version = '1.0-SNAPSHOT'
+def libusbSo = '/usr/lib/x86_64-linux-gnu/libusb-1.0.so'
 
 repositories {
     mavenCentral()
@@ -13,7 +14,55 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // https://mvnrepository.com/artifact/org.usb4java/usb4java
+    implementation 'org.usb4java:usb4java:1.3.0'
+
+    implementation 'com.google.code.gson:gson:2.13.2'
+
+    implementation 'org.slf4j:slf4j-api:2.0.13'
+    runtimeOnly 'org.slf4j:slf4j-simple:2.0.13'
 }
+
+tasks.register('generateHeaders', Exec) {
+    dependsOn compileJava
+    description = 'Generate JNI header files'
+    def outputDir = file("src/main/c")
+    commandLine "javac", "-h", outputDir, "src/main/java/ru/aloyenz/t501/driver/LibUsbDeattacher.java"
+}
+
+tasks.register('buildNativeLib', Exec) {
+    description = 'Compile native JNI + libusb library'
+    def outputDir = file("$buildDir/native")
+    outputs.dir(outputDir)
+    doFirst { outputDir.mkdirs() }
+
+    def jdkHomeDir = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(21)
+    }.get().metadata.installationPath.asFile.absolutePath
+
+    def jniInclude = "${jdkHomeDir}/include"
+    def jniIncludeOs = org.gradle.internal.os.OperatingSystem.current().isWindows() ? "win32" :
+            org.gradle.internal.os.OperatingSystem.current().isMacOsX() ? "darwin" : "linux"
+    def includeLibusb = "/usr/include/libusb-1.0"
+
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine 'gcc',
+                "-I${jniInclude}", "-I${jniInclude}/${jniIncludeOs}",
+                "-I${includeLibusb}",
+                '-shared', '-o', "${outputDir}/libusb_deattacher.dll",
+                'src/main/c/libusb_deattacher.c',
+                '-lusb-1.0'
+    } else {
+        commandLine 'gcc',
+                "-I${jniInclude}", "-I${jniInclude}/${jniIncludeOs}",
+                "-I${includeLibusb}",
+                '-shared', '-fPIC', '-o', "${outputDir}/libvpen.so",
+                'src/main/c/libvpen.c',
+                libusbSo
+    }
+}
+
 
 test {
     useJUnitPlatform()
