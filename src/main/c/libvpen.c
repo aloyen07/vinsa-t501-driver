@@ -25,6 +25,10 @@ JNIEXPORT jlong JNICALL Java_ru_aloyenz_t501_driver_VPen_initialize
     // Initializing uinput
     ioctl(fd, UI_SET_EVBIT, EV_KEY);
     ioctl(fd, UI_SET_KEYBIT, BTN_TOUCH);
+    ioctl(fd, UI_SET_KEYBIT, BTN_TOOL_PEN);    // Adding pen tool support
+    ioctl(fd, UI_SET_KEYBIT, BTN_STYLUS);      // Adding first button stylus support
+    ioctl(fd, UI_SET_KEYBIT, BTN_STYLUS2);     // Adding second button stylus support
+
     ioctl(fd, UI_SET_EVBIT, EV_ABS);
     ioctl(fd, UI_SET_ABSBIT, ABS_X);
     ioctl(fd, UI_SET_ABSBIT, ABS_Y);
@@ -32,31 +36,66 @@ JNIEXPORT jlong JNICALL Java_ru_aloyenz_t501_driver_VPen_initialize
     ioctl(fd, UI_SET_ABSBIT, ABS_TILT_X);
     ioctl(fd, UI_SET_ABSBIT, ABS_TILT_Y);
 
-    // Setting up uinput device
-    struct uinput_user_dev uidev;
-    memset(&uidev, 0, sizeof(uidev));
-    snprintf(uidev.name, UINPUT_MAX_NAME_SIZE, "%s", name);
-    uidev.id.bustype = BUS_USB;
-    uidev.id.vendor = 0x1984;
-    uidev.id.product = 0x2022;
-    uidev.id.version = 1;
-    uidev.absmin[ABS_X] = 0;
-    uidev.absmax[ABS_X] = 4096;
-    uidev.absmin[ABS_Y] = 0;
-    uidev.absmax[ABS_Y] = 4096;
-    uidev.absmin[ABS_PRESSURE] = 0;
-    uidev.absmax[ABS_PRESSURE] = 1024;
-    uidev.absmin[ABS_TILT_X] = -90;
-    uidev.absmax[ABS_TILT_X] = 90;
-    uidev.absmin[ABS_TILT_Y] = -90;
-    uidev.absmax[ABS_TILT_Y] = 90;
+    // Relative events
+    ioctl(fd, UI_SET_EVBIT, EV_REL);
+    ioctl(fd, UI_SET_RELBIT, REL_X);
+    ioctl(fd, UI_SET_RELBIT, REL_Y);
 
-    if (write(fd, &uidev, sizeof(uidev)) < 0) {
+    // Setting up absolute axes
+    struct uinput_abs_setup abs_setup;
+
+    // X axis setup
+    memset(&abs_setup, 0, sizeof(abs_setup));
+    abs_setup.code = ABS_X;
+    abs_setup.absinfo.minimum = 0;
+    abs_setup.absinfo.maximum = 4096;
+    abs_setup.absinfo.resolution = 2540; // 100 DPI
+    ioctl(fd, UI_ABS_SETUP, &abs_setup);
+
+    // Y axis setup
+    abs_setup.code = ABS_Y;
+    abs_setup.absinfo.minimum = 0;
+    abs_setup.absinfo.maximum = 4096;
+    abs_setup.absinfo.resolution = 2540; // 100 DPI
+    ioctl(fd, UI_ABS_SETUP, &abs_setup);
+
+    // Pressure setup
+    abs_setup.code = ABS_PRESSURE;
+    abs_setup.absinfo.minimum = 0;
+    abs_setup.absinfo.maximum = 1024;
+    abs_setup.absinfo.resolution = 0; // Pressure resolution not defined
+    ioctl(fd, UI_ABS_SETUP, &abs_setup);
+
+    // X tilt setup
+    abs_setup.code = ABS_TILT_X;
+    abs_setup.absinfo.minimum = -90;
+    abs_setup.absinfo.maximum = 90;
+    abs_setup.absinfo.resolution = 1; // 1 unit per degree
+    ioctl(fd, UI_ABS_SETUP, &abs_setup);
+
+    // Y tilt setup
+    abs_setup.code = ABS_TILT_Y;
+    abs_setup.absinfo.minimum = -90;
+    abs_setup.absinfo.maximum = 90;
+    abs_setup.absinfo.resolution = 1; // 1 unit per degree
+    ioctl(fd, UI_ABS_SETUP, &abs_setup);
+
+    // Setting up uinput device (without absres setup)
+    struct uinput_setup setup;
+    memset(&setup, 0, sizeof(setup));
+    snprintf(setup.name, UINPUT_MAX_NAME_SIZE, "%s", name);
+    setup.id.bustype = BUS_USB;
+    setup.id.vendor = 0x1984;
+    setup.id.product = 0x2022;
+    setup.id.version = 1;
+
+    if (ioctl(fd, UI_DEV_SETUP, &setup) < 0) {
         close(fd);
-        (*env) -> ReleaseStringUTFChars(env, deviceName, name);
+        (*env)->ReleaseStringUTFChars(env, deviceName, name);
         return -1;
     }
 
+    // Creating uinput device
     if (ioctl(fd, UI_DEV_CREATE) < 0) {
         close(fd);
         (*env)->ReleaseStringUTFChars(env, deviceName, name);
@@ -76,6 +115,14 @@ JNIEXPORT jint JNICALL Java_ru_aloyenz_t501_driver_VPen_writePosition
 
     struct input_event ev;
     memset(&ev, 0, sizeof(ev));
+
+    // Send tool pen event
+    ev.type = EV_KEY;
+    ev.code = BTN_TOOL_PEN;
+    ev.value = (pressure > 0 || touch) ? 1 : 0; // Stub: tool present if pressure > 0 or touch
+    if (write(fd, &ev, sizeof(ev)) < 0) {
+        return -9; // Error writing tool pen event
+    }
 
     // Write X coordinate
     ev.type = EV_ABS;
