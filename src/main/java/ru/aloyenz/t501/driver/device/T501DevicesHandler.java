@@ -1,10 +1,12 @@
-package ru.aloyenz.t501.driver;
+package ru.aloyenz.t501.driver.device;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usb4java.*;
+import ru.aloyenz.t501.driver.util.Pair;
 
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -14,7 +16,7 @@ public class T501DevicesHandler {
 
     private final HashMap<Byte, Pair<DeviceHandle, DeviceInformation>> deviceHandlers = new HashMap<>();
 
-    protected T501DevicesHandler() {}
+    public T501DevicesHandler() {}
 
     public void onDeviceConnected(Device device, DeviceDescriptor descriptor) {
         if (deviceHandlers.containsKey(descriptor.iSerialNumber())) {
@@ -35,28 +37,18 @@ public class T501DevicesHandler {
             byte ifaceNumber = 0;
             int maxPacketSize = 0;
             boolean found = false;
-            boolean sizeFound = false;
 
-            outer:
             for (Interface iface : configDescriptor.iface()) {
                 for (InterfaceDescriptor ifaceDesc : iface.altsetting()) {
                     for (EndpointDescriptor epDesc : ifaceDesc.endpoint()) {
                         byte addr = epDesc.bEndpointAddress();
-                        if ((epDesc.bEndpointAddress() & LibUsb.ENDPOINT_IN) != 0 &&
-                                (epDesc.bmAttributes() & LibUsb.TRANSFER_TYPE_MASK) == LibUsb.TRANSFER_TYPE_INTERRUPT && !sizeFound) {
-                            maxPacketSize = epDesc.wMaxPacketSize();
-                            sizeFound = true;
-                        }
 
-                        if ((addr & LibUsb.ENDPOINT_DIR_MASK) == LibUsb.ENDPOINT_IN && !found) {
+                        if ((addr & LibUsb.ENDPOINT_DIR_MASK) == LibUsb.ENDPOINT_IN && ifaceDesc.bInterfaceNumber() == 1) {
                             ifaceNumber = ifaceDesc.bInterfaceNumber();
+                            maxPacketSize = epDesc.wMaxPacketSize();
                             entrypoint = addr;
-                            LOGGER.info("Device {} has entrypoint {}...", descriptor.iSerialNumber(), addr);
+                            LOGGER.info("Device {} has entrypoint {} and interface number {}...", descriptor.iSerialNumber(), addr, ifaceNumber);
                             found = true;
-                        }
-
-                        if (found && sizeFound) {
-                            break outer;
                         }
                     }
                 }
@@ -75,7 +67,7 @@ public class T501DevicesHandler {
                 LOGGER.error("Failed to open device: {}. This program must be run as sudo", LibUsb.strError(result));
                 return;
             }
-            LibUsb.detachKernelDriver(handle, 0);
+            LibUsb.detachKernelDriver(handle, ifaceNumber);
 
             // Reset the device to ensure it's in a known state
             result = LibUsb.resetDevice(handle);
@@ -94,23 +86,32 @@ public class T501DevicesHandler {
             }
 
             // Sending Full area packet
-            ByteBuffer report = ByteBuffer.allocateDirect(8);
-            report.put(new byte[] { 0x08, 0x04, 0x1d, 0x01, (byte)0xff, (byte)0xff, 0x06, 0x2e });
-            report.rewind();
+            byte[] report = new byte[] { (byte)0x08, (byte)0x03, (byte)0x00,
+                    (byte)0xff, (byte)0xf0, (byte)0x00,
+                    (byte)0xff, (byte)0xf0 };
 
-            result = LibUsb.controlTransfer(handle,
-                    (byte) 0x21,  // bmRequestType
-                    (byte) 0x09,  // bRequest (SET_REPORT)
-                    (short) 0x0308, // wValue
-                    ifaceNumber, // wIndex (interface)
-                    report,
-                    250);
+            byte reportId = 0x08; // первый байт твоего отчёта
+            byte reportType = 0x03; // Feature report (0x03)
+            byte requestType = (byte) (LibUsb.REQUEST_TYPE_CLASS | LibUsb.RECIPIENT_INTERFACE | LibUsb.ENDPOINT_OUT);
+            byte request = (byte) 0x09; // SET_REPORT
+            short value = (short) ((reportType << 8) | reportId); // 0x0308
+            short index = (short) ifaceNumber;
 
+            ByteBuffer buffer = ByteBuffer.allocateDirect(report.length);
+            buffer.put(report);
+            buffer.rewind();
+
+            IntBuffer transferred = IntBuffer.allocate(1);
+
+            result = LibUsb.controlTransfer(handle, requestType, request, value, index, buffer, 5000);
             if (result < 0) {
-                LOGGER.error("Failed to claim transfer: {}", LibUsb.strError(result));
+                throw new RuntimeException("Error sending report via control transfer: " + LibUsb.strError(result));
             }
 
+            LOGGER.info("Sent full mode report via control transfer, {} bytes. Transferred: {}", result, transferred.get(0));
+
             // Store the handle and device information
+            LOGGER.info("Packet size for device {}: {}", descriptor.iSerialNumber(), maxPacketSize);
             deviceHandlers.put(descriptor.iSerialNumber(), new Pair<>(handle, new DeviceInformation(
                     ifaceNumber,
                     entrypoint,
@@ -127,7 +128,7 @@ public class T501DevicesHandler {
 
     public void reattachKernelDrivers() {
         for (Pair<DeviceHandle, DeviceInformation> handle : deviceHandlers.values()) {
-            LibUsb.attachKernelDriver(handle.first(), 0);
+            LibUsb.attachKernelDriver(handle.first(), handle.second().interfaceNumber());
             LibUsb.close(handle.first());
         }
 

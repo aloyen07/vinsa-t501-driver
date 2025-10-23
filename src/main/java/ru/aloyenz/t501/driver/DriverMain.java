@@ -3,8 +3,18 @@ package ru.aloyenz.t501.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usb4java.*;
+import ru.aloyenz.t501.driver.bash.ProcessManager;
 import ru.aloyenz.t501.driver.config.Configuration;
+import ru.aloyenz.t501.driver.device.DeviceReader;
+import ru.aloyenz.t501.driver.device.KeyCodesFetcher;
+import ru.aloyenz.t501.driver.device.T501DevicesHandler;
+import ru.aloyenz.t501.driver.exception.InvalidSpecialConfigException;
+import ru.aloyenz.t501.driver.virtual.VKeyboard;
+import ru.aloyenz.t501.driver.virtual.VMouse;
+import ru.aloyenz.t501.driver.virtual.VPen;
+import ru.aloyenz.t501.driver.window.RealTimeGraph;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,20 +31,42 @@ public class DriverMain {
 
     private static Thread hotplugThread;
     private static Thread readThread;
+    private static Thread replicationThread;
+
+    private static RealTimeGraph realTimeGraph;
 
     private static final T501DevicesHandler HANDLER = new T501DevicesHandler();
     private static final DeviceReader READER = new DeviceReader(HANDLER);
 
     private static long virtualPenHandle = -1;
+    private static long virtualKeyboardHandle = -1;
+    private static long virtualMouseHandle = -1;
 
     public static long getVirtualPenHandle() {
         return virtualPenHandle;
     }
 
+    public static long getVirtualKeyboardHandle() {
+        return virtualKeyboardHandle;
+    }
+
+    public static long getVirtualMouseHandle() {
+        return virtualMouseHandle;
+    }
+
+    public static RealTimeGraph getRealTimeGraph() {
+        return realTimeGraph;
+    }
+
+    @SuppressWarnings("all")
     public static void main(String[] args) {
 
-        // Reading configuration
+
+        // Reading args
         String configPath = "t501_driver_config.json";
+        String userHeadersPath = null;
+        String userKeycodesCachePath = "keycodes.json";
+        boolean forceFetchKeycodes = false;
 
         for (int i = 0; i < args.length - 1; i++) {
             if (args[i].equalsIgnoreCase("--config")) {
@@ -45,14 +77,43 @@ public class DriverMain {
                     return;
                 }
             }
+
+            if (args[i].equalsIgnoreCase("--keycodes-cache")) {
+                if (i + 1 < args.length) {
+                    userKeycodesCachePath = args[i + 1];
+                } else {
+                    logger.error("No keycodes cache file path provided after --keycodes-cache");
+                    return;
+                }
+            }
+
+            if (args[i].equalsIgnoreCase("--user-headers")) {
+                if (i + 1 < args.length) {
+                    userHeadersPath = args[i + 1];
+                } else {
+                    logger.error("No user headers file path provided after --user-headers");
+                    return;
+                }
+            }
+
+            if (args[i].equalsIgnoreCase("--force-fetch-keycodes")) {
+                forceFetchKeycodes = true;
+            }
         }
 
+        // Reading keycodes
+        KeyCodesFetcher.load(userKeycodesCachePath, userHeadersPath, forceFetchKeycodes);
+
+        // Reading configuration
         File configFile = new File(configPath);
         try {
             // Initializing configuration. We didn't need to check path traversal!
             Configuration.init(configFile);
         } catch (IOException e) {
             logger.error("Failed to read or create configuration file: {}", e.getMessage(), e);
+            return;
+        } catch (InvalidSpecialConfigException e) {
+            logger.error("Invalid special configuration: {}", e.getMessage(), e);
             return;
         }
 
@@ -72,8 +133,24 @@ public class DriverMain {
         // Initializing virtual pen
         logger.info("Initializing virtual pen...");
         virtualPenHandle = VPen.initialize(Configuration.getInstance().penName);
+        virtualKeyboardHandle = VKeyboard.initialize(Configuration.getInstance().keyboardName,
+                KeyCodesFetcher.getNeededKeycodes(
+                        Configuration.getInstance().keyboardConfiguration,
+                        Configuration.getInstance().specialButtonsConfiguration
+                ));
+        virtualMouseHandle = VMouse.initialize(Configuration.getInstance().mouseName);
         if (virtualPenHandle <= -1) {
             logger.error("Failed to initialize virtual pen. Error code: {}", virtualPenHandle);
+            return;
+        }
+
+        if (virtualKeyboardHandle <= -1) {
+            logger.error("Failed to initialize virtual keyboard. Error code: {}", virtualKeyboardHandle);
+            return;
+        }
+
+        if (virtualMouseHandle <= -1) {
+            logger.error("Failed to initialize virtual mouse. Error code: {}", virtualMouseHandle);
             return;
         }
 
@@ -146,12 +223,15 @@ public class DriverMain {
         });
         hotplugThread.start();
 
+        replicationThread = READER.getReplicationThread();
+        replicationThread.start();
+
         readThread = new Thread(() -> {
             while (true) {
                 READER.read();
 
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(Configuration.getInstance().readThreadDelayMs);
                 } catch (InterruptedException e) {
                     logger.error("Read thread interrupted, exiting.");
                     break;
@@ -161,6 +241,14 @@ public class DriverMain {
         readThread.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(DriverMain::stop));
+
+
+        JFrame frame = new JFrame("Real-Time Graph");
+        realTimeGraph = new RealTimeGraph();
+        frame.add(realTimeGraph);
+        frame.setSize(800, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 
     private static void findDevice() {
@@ -213,5 +301,22 @@ public class DriverMain {
 
         // Reattaching kernel drivers for alive devices
         HANDLER.reattachKernelDrivers();
+
+        // Removing virtual devices
+        if (virtualPenHandle > -1) {
+            VPen.shutdown(virtualPenHandle);
+        } else if (virtualKeyboardHandle > -1) {
+            VKeyboard.shutdown(virtualKeyboardHandle);
+        } else if (virtualMouseHandle > -1) {
+            VMouse.shutdown(virtualMouseHandle);
+        }
+
+        // Cleaning up processes
+        ProcessManager.shutdown();
+
+        // Cleaning up libusb
+        LibUsb.exit(null);
+
+        logger.info("Driver stopped.");
     }
 }

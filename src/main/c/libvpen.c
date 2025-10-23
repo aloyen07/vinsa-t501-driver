@@ -2,15 +2,16 @@
 // Created by aloyenz on 21.10.25.
 //
 
+#include <iso646.h>
 #include <linux/uinput.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
 
-#include "ru_aloyenz_t501_driver_VPen.h"
+#include "ru_aloyenz_t501_driver_virtual_VPen.h"
 
-JNIEXPORT jlong JNICALL Java_ru_aloyenz_t501_driver_VPen_initialize
+JNIEXPORT jlong JNICALL Java_ru_aloyenz_t501_driver_virtual_VPen_initialize
         (JNIEnv *env, jclass clazz, jstring deviceName) {
     const char *name = (*env)->GetStringUTFChars(env, deviceName, NULL);
     if (name == NULL) {
@@ -24,6 +25,7 @@ JNIEXPORT jlong JNICALL Java_ru_aloyenz_t501_driver_VPen_initialize
 
     // Initializing uinput
     ioctl(fd, UI_SET_EVBIT, EV_KEY);
+    ioctl(fd, UI_SET_EVBIT, EV_REP);
     ioctl(fd, UI_SET_KEYBIT, BTN_TOUCH);
     ioctl(fd, UI_SET_KEYBIT, BTN_TOOL_PEN);    // Adding pen tool support
     ioctl(fd, UI_SET_KEYBIT, BTN_STYLUS);      // Adding first button stylus support
@@ -106,8 +108,9 @@ JNIEXPORT jlong JNICALL Java_ru_aloyenz_t501_driver_VPen_initialize
     return (jlong)fd; // Return file descriptor as jlong
 }
 
-JNIEXPORT jint JNICALL Java_ru_aloyenz_t501_driver_VPen_writePosition
-        (JNIEnv *env, jclass clazz, jlong fd, jint x, jint y, jint pressure, jboolean touch, jint tiltX, jint tiltY) {
+JNIEXPORT jint JNICALL Java_ru_aloyenz_t501_driver_virtual_VPen_writePosition
+        (JNIEnv *env, jclass clazz, jlong fd, jint x, jint y, jint pressure, jboolean touch, jint tiltX, jint tiltY,
+        jboolean plusPressed, jboolean minusPressed) {
     if (fd <= 0) {
         return -1; // Invalid file descriptor
     }
@@ -119,7 +122,7 @@ JNIEXPORT jint JNICALL Java_ru_aloyenz_t501_driver_VPen_writePosition
     // Send tool pen event
     ev.type = EV_KEY;
     ev.code = BTN_TOOL_PEN;
-    ev.value = (pressure > 0 || touch) ? 1 : 0; // Stub: tool present if pressure > 0 or touch
+    ev.value = 1; // Stylus always present
     if (write(fd, &ev, sizeof(ev)) < 0) {
         return -9; // Error writing tool pen event
     }
@@ -168,6 +171,20 @@ JNIEXPORT jint JNICALL Java_ru_aloyenz_t501_driver_VPen_writePosition
         return -7; // Error writing touch
     }
 
+    // Write stylus button events
+    ev.type = EV_KEY;
+    ev.code = BTN_STYLUS;
+    ev.value = plusPressed ? 1 : 0;
+    if (write(fd, &ev, sizeof(ev)) < 0) {
+        return -10; // Error writing plus button
+    }
+
+    ev.code = BTN_STYLUS2;
+    ev.value = minusPressed ? 1 : 0;
+    if (write(fd, &ev, sizeof(ev)) < 0) {
+        return -11; // Error writing minus button
+    }
+
     // Synchronize events
     ev.type = EV_SYN;
     ev.code = SYN_REPORT;
@@ -179,12 +196,12 @@ JNIEXPORT jint JNICALL Java_ru_aloyenz_t501_driver_VPen_writePosition
     return 0; // Success
 }
 
-JNIEXPORT void JNICALL Java_ru_aloyenz_t501_driver_VPen_shutdown
-(JNIEnv *env, jclass class, jlong fdPointer) {
-    if (fdPointer > 0) {
-        // Destroy uinput device
-        ioctl((int)fdPointer, UI_DEV_DESTROY);
-        // Close
-        close((int)fdPointer);
-    }
+JNIEXPORT void JNICALL Java_ru_aloyenz_t501_driver_virtual_VPen_shutdown(
+    JNIEnv *env, jclass class, jlong fdPointer) {
+  if (fdPointer > 0) {
+    // Destroy uinput device
+    ioctl((int)fdPointer, UI_DEV_DESTROY);
+    // Close
+    close((int)fdPointer);
+  }
 }

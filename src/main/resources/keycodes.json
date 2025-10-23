@@ -1,0 +1,1465 @@
+{
+  "KEY_RESERVED": {
+    "key_code": 0
+  },
+  "REL_X": {
+    "key_code": 0
+  },
+  "KEY_ESC": {
+    "key_code": 1
+  },
+  "REL_Y": {
+    "key_code": 1
+  },
+  "REL_Z": {
+    "key_code": 2
+  },
+  "REL_RX": {
+    "key_code": 3
+  },
+  "REL_RY": {
+    "key_code": 4
+  },
+  "REL_RZ": {
+    "key_code": 5
+  },
+  "REL_HWHEEL": {
+    "key_code": 6
+  },
+  "REL_DIAL": {
+    "key_code": 7
+  },
+  "REL_WHEEL": {
+    "key_code": 8
+  },
+  "REL_MISC": {
+    "key_code": 9
+  },
+  "REL_RESERVED": {
+    "key_code": 10
+  },
+  "REL_WHEEL_HI_RES": {
+    "key_code": 11
+  },
+  "KEY_MINUS": {
+    "key_code": 12
+  },
+  "REL_HWHEEL_HI_RES": {
+    "key_code": 12
+  },
+  "KEY_EQUAL": {
+    "key_code": 13
+  },
+  "KEY_BACKSPACE": {
+    "key_code": 14
+  },
+  "KEY_TAB": {
+    "key_code": 15
+  },
+  "REL_MAX": {
+    "key_code": 15
+  },
+  "KEY_Q": {
+    "key_code": 16
+  },
+  "KEY_W": {
+    "key_code": 17
+  },
+  "KEY_E": {
+    "key_code": 18
+  },
+  "KEY_R": {
+    "key_code": 19
+  },
+  "KEY_T": {
+    "key_code": 20
+  },
+  "KEY_Y": {
+    "key_code": 21
+  },
+  "KEY_U": {
+    "key_code": 22
+  },
+  "KEY_I": {
+    "key_code": 23
+  },
+  "KEY_O": {
+    "key_code": 24
+  },
+  "KEY_P": {
+    "key_code": 25
+  },
+  "KEY_LEFTBRACE": {
+    "key_code": 26
+  },
+  "KEY_RIGHTBRACE": {
+    "key_code": 27
+  },
+  "KEY_ENTER": {
+    "key_code": 28
+  },
+  "KEY_LEFTCTRL": {
+    "key_code": 29
+  },
+  "KEY_A": {
+    "key_code": 30
+  },
+  "KEY_S": {
+    "key_code": 31
+  },
+  "KEY_D": {
+    "key_code": 32
+  },
+  "KEY_F": {
+    "key_code": 33
+  },
+  "KEY_G": {
+    "key_code": 34
+  },
+  "KEY_H": {
+    "key_code": 35
+  },
+  "KEY_J": {
+    "key_code": 36
+  },
+  "KEY_K": {
+    "key_code": 37
+  },
+  "KEY_L": {
+    "key_code": 38
+  },
+  "KEY_SEMICOLON": {
+    "key_code": 39
+  },
+  "KEY_APOSTROPHE": {
+    "key_code": 40
+  },
+  "KEY_GRAVE": {
+    "key_code": 41
+  },
+  "KEY_LEFTSHIFT": {
+    "key_code": 42
+  },
+  "KEY_BACKSLASH": {
+    "key_code": 43
+  },
+  "KEY_Z": {
+    "key_code": 44
+  },
+  "KEY_X": {
+    "key_code": 45
+  },
+  "KEY_C": {
+    "key_code": 46
+  },
+  "KEY_V": {
+    "key_code": 47
+  },
+  "KEY_B": {
+    "key_code": 48
+  },
+  "KEY_N": {
+    "key_code": 49
+  },
+  "KEY_M": {
+    "key_code": 50
+  },
+  "KEY_COMMA": {
+    "key_code": 51
+  },
+  "KEY_DOT": {
+    "key_code": 52
+  },
+  "KEY_SLASH": {
+    "key_code": 53
+  },
+  "KEY_RIGHTSHIFT": {
+    "key_code": 54
+  },
+  "KEY_KPASTERISK": {
+    "key_code": 55
+  },
+  "KEY_LEFTALT": {
+    "key_code": 56
+  },
+  "KEY_SPACE": {
+    "key_code": 57
+  },
+  "KEY_CAPSLOCK": {
+    "key_code": 58
+  },
+  "KEY_NUMLOCK": {
+    "key_code": 69
+  },
+  "KEY_SCROLLLOCK": {
+    "key_code": 70
+  },
+  "KEY_KPMINUS": {
+    "key_code": 74
+  },
+  "KEY_KPPLUS": {
+    "key_code": 78
+  },
+  "KEY_KPDOT": {
+    "key_code": 83
+  },
+  "KEY_ZENKAKUHANKAKU": {
+    "key_code": 85
+  },
+  "KEY_RO": {
+    "key_code": 89
+  },
+  "KEY_KATAKANA": {
+    "key_code": 90
+  },
+  "KEY_HIRAGANA": {
+    "key_code": 91
+  },
+  "KEY_HENKAN": {
+    "key_code": 92
+  },
+  "KEY_KATAKANAHIRAGANA": {
+    "key_code": 93
+  },
+  "KEY_MUHENKAN": {
+    "key_code": 94
+  },
+  "KEY_KPJPCOMMA": {
+    "key_code": 95
+  },
+  "KEY_KPENTER": {
+    "key_code": 96
+  },
+  "KEY_RIGHTCTRL": {
+    "key_code": 97
+  },
+  "KEY_KPSLASH": {
+    "key_code": 98
+  },
+  "KEY_SYSRQ": {
+    "key_code": 99
+  },
+  "KEY_RIGHTALT": {
+    "key_code": 100
+  },
+  "KEY_LINEFEED": {
+    "key_code": 101
+  },
+  "KEY_HOME": {
+    "key_code": 102
+  },
+  "KEY_UP": {
+    "key_code": 103
+  },
+  "KEY_PAGEUP": {
+    "key_code": 104
+  },
+  "KEY_LEFT": {
+    "key_code": 105
+  },
+  "KEY_RIGHT": {
+    "key_code": 106
+  },
+  "KEY_END": {
+    "key_code": 107
+  },
+  "KEY_DOWN": {
+    "key_code": 108
+  },
+  "KEY_PAGEDOWN": {
+    "key_code": 109
+  },
+  "KEY_INSERT": {
+    "key_code": 110
+  },
+  "KEY_DELETE": {
+    "key_code": 111
+  },
+  "KEY_MACRO": {
+    "key_code": 112
+  },
+  "KEY_MUTE": {
+    "key_code": 113
+  },
+  "KEY_VOLUMEDOWN": {
+    "key_code": 114
+  },
+  "KEY_VOLUMEUP": {
+    "key_code": 115
+  },
+  "KEY_POWER": {
+    "key_code": 116,
+    "comment": "SC System Power Down"
+  },
+  "KEY_KPEQUAL": {
+    "key_code": 117
+  },
+  "KEY_KPPLUSMINUS": {
+    "key_code": 118
+  },
+  "KEY_PAUSE": {
+    "key_code": 119
+  },
+  "KEY_SCALE": {
+    "key_code": 120,
+    "comment": "AL Compiz Scale (Expose)"
+  },
+  "KEY_KPCOMMA": {
+    "key_code": 121
+  },
+  "KEY_HANGEUL": {
+    "key_code": 122
+  },
+  "KEY_HANJA": {
+    "key_code": 123
+  },
+  "KEY_YEN": {
+    "key_code": 124
+  },
+  "KEY_LEFTMETA": {
+    "key_code": 125
+  },
+  "KEY_RIGHTMETA": {
+    "key_code": 126
+  },
+  "KEY_COMPOSE": {
+    "key_code": 127
+  },
+  "KEY_STOP": {
+    "key_code": 128,
+    "comment": "AC Stop"
+  },
+  "KEY_AGAIN": {
+    "key_code": 129
+  },
+  "KEY_PROPS": {
+    "key_code": 130,
+    "comment": "AC Properties"
+  },
+  "KEY_UNDO": {
+    "key_code": 131,
+    "comment": "AC Undo"
+  },
+  "KEY_FRONT": {
+    "key_code": 132
+  },
+  "KEY_COPY": {
+    "key_code": 133,
+    "comment": "AC Copy"
+  },
+  "KEY_OPEN": {
+    "key_code": 134,
+    "comment": "AC Open"
+  },
+  "KEY_PASTE": {
+    "key_code": 135,
+    "comment": "AC Paste"
+  },
+  "KEY_FIND": {
+    "key_code": 136,
+    "comment": "AC Search"
+  },
+  "KEY_CUT": {
+    "key_code": 137,
+    "comment": "AC Cut"
+  },
+  "KEY_HELP": {
+    "key_code": 138,
+    "comment": "AL Integrated Help Center"
+  },
+  "KEY_MENU": {
+    "key_code": 139,
+    "comment": "Menu (show menu)"
+  },
+  "KEY_CALC": {
+    "key_code": 140,
+    "comment": "AL Calculator"
+  },
+  "KEY_SETUP": {
+    "key_code": 141
+  },
+  "KEY_SLEEP": {
+    "key_code": 142,
+    "comment": "SC System Sleep"
+  },
+  "KEY_WAKEUP": {
+    "key_code": 143,
+    "comment": "System Wake Up"
+  },
+  "KEY_FILE": {
+    "key_code": 144,
+    "comment": "AL Local Machine Browser"
+  },
+  "KEY_SENDFILE": {
+    "key_code": 145
+  },
+  "KEY_DELETEFILE": {
+    "key_code": 146
+  },
+  "KEY_XFER": {
+    "key_code": 147
+  },
+  "KEY_WWW": {
+    "key_code": 150,
+    "comment": "AL Internet Browser"
+  },
+  "KEY_MSDOS": {
+    "key_code": 151
+  },
+  "KEY_COFFEE": {
+    "key_code": 152,
+    "comment": "AL Terminal Lock/Screensaver"
+  },
+  "KEY_ROTATE_DISPLAY": {
+    "key_code": 153,
+    "comment": "Display orientation for e.g. tablets"
+  },
+  "KEY_CYCLEWINDOWS": {
+    "key_code": 154
+  },
+  "KEY_MAIL": {
+    "key_code": 155
+  },
+  "KEY_BOOKMARKS": {
+    "key_code": 156,
+    "comment": "AC Bookmarks"
+  },
+  "KEY_COMPUTER": {
+    "key_code": 157
+  },
+  "KEY_BACK": {
+    "key_code": 158,
+    "comment": "AC Back"
+  },
+  "KEY_FORWARD": {
+    "key_code": 159,
+    "comment": "AC Forward"
+  },
+  "KEY_CLOSECD": {
+    "key_code": 160
+  },
+  "KEY_EJECTCD": {
+    "key_code": 161
+  },
+  "KEY_EJECTCLOSECD": {
+    "key_code": 162
+  },
+  "KEY_NEXTSONG": {
+    "key_code": 163
+  },
+  "KEY_PLAYPAUSE": {
+    "key_code": 164
+  },
+  "KEY_PREVIOUSSONG": {
+    "key_code": 165
+  },
+  "KEY_STOPCD": {
+    "key_code": 166
+  },
+  "KEY_RECORD": {
+    "key_code": 167
+  },
+  "KEY_REWIND": {
+    "key_code": 168
+  },
+  "KEY_PHONE": {
+    "key_code": 169,
+    "comment": "Media Select Telephone"
+  },
+  "KEY_ISO": {
+    "key_code": 170
+  },
+  "KEY_CONFIG": {
+    "key_code": 171,
+    "comment": "AL Consumer Control Configuration"
+  },
+  "KEY_HOMEPAGE": {
+    "key_code": 172,
+    "comment": "AC Home"
+  },
+  "KEY_REFRESH": {
+    "key_code": 173,
+    "comment": "AC Refresh"
+  },
+  "KEY_EXIT": {
+    "key_code": 174,
+    "comment": "AC Exit"
+  },
+  "KEY_MOVE": {
+    "key_code": 175
+  },
+  "KEY_EDIT": {
+    "key_code": 176
+  },
+  "KEY_SCROLLUP": {
+    "key_code": 177
+  },
+  "KEY_SCROLLDOWN": {
+    "key_code": 178
+  },
+  "KEY_KPLEFTPAREN": {
+    "key_code": 179
+  },
+  "KEY_KPRIGHTPAREN": {
+    "key_code": 180
+  },
+  "KEY_NEW": {
+    "key_code": 181,
+    "comment": "AC New"
+  },
+  "KEY_REDO": {
+    "key_code": 182,
+    "comment": "AC Redo/Repeat"
+  },
+  "KEY_PLAYCD": {
+    "key_code": 200
+  },
+  "KEY_PAUSECD": {
+    "key_code": 201
+  },
+  "KEY_ALL_APPLICATIONS": {
+    "key_code": 204,
+    "comment": "AC Desktop Show All Applications"
+  },
+  "KEY_SUSPEND": {
+    "key_code": 205
+  },
+  "KEY_CLOSE": {
+    "key_code": 206,
+    "comment": "AC Close"
+  },
+  "KEY_PLAY": {
+    "key_code": 207
+  },
+  "KEY_FASTFORWARD": {
+    "key_code": 208
+  },
+  "KEY_BASSBOOST": {
+    "key_code": 209
+  },
+  "KEY_PRINT": {
+    "key_code": 210,
+    "comment": "AC Print"
+  },
+  "KEY_HP": {
+    "key_code": 211
+  },
+  "KEY_CAMERA": {
+    "key_code": 212
+  },
+  "KEY_SOUND": {
+    "key_code": 213
+  },
+  "KEY_QUESTION": {
+    "key_code": 214
+  },
+  "KEY_EMAIL": {
+    "key_code": 215
+  },
+  "KEY_CHAT": {
+    "key_code": 216
+  },
+  "KEY_SEARCH": {
+    "key_code": 217
+  },
+  "KEY_CONNECT": {
+    "key_code": 218
+  },
+  "KEY_FINANCE": {
+    "key_code": 219,
+    "comment": "AL Checkbook/Finance"
+  },
+  "KEY_SPORT": {
+    "key_code": 220
+  },
+  "KEY_SHOP": {
+    "key_code": 221
+  },
+  "KEY_ALTERASE": {
+    "key_code": 222
+  },
+  "KEY_CANCEL": {
+    "key_code": 223,
+    "comment": "AC Cancel"
+  },
+  "KEY_BRIGHTNESSDOWN": {
+    "key_code": 224
+  },
+  "KEY_BRIGHTNESSUP": {
+    "key_code": 225
+  },
+  "KEY_MEDIA": {
+    "key_code": 226
+  },
+  "KEY_SWITCHVIDEOMODE": {
+    "key_code": 227,
+    "comment": "Cycle between available video"
+  },
+  "KEY_KBDILLUMTOGGLE": {
+    "key_code": 228
+  },
+  "KEY_KBDILLUMDOWN": {
+    "key_code": 229
+  },
+  "KEY_KBDILLUMUP": {
+    "key_code": 230
+  },
+  "KEY_SEND": {
+    "key_code": 231,
+    "comment": "AC Send"
+  },
+  "KEY_REPLY": {
+    "key_code": 232,
+    "comment": "AC Reply"
+  },
+  "KEY_FORWARDMAIL": {
+    "key_code": 233,
+    "comment": "AC Forward Msg"
+  },
+  "KEY_SAVE": {
+    "key_code": 234,
+    "comment": "AC Save"
+  },
+  "KEY_DOCUMENTS": {
+    "key_code": 235
+  },
+  "KEY_BATTERY": {
+    "key_code": 236
+  },
+  "KEY_BLUETOOTH": {
+    "key_code": 237
+  },
+  "KEY_WLAN": {
+    "key_code": 238
+  },
+  "KEY_UWB": {
+    "key_code": 239
+  },
+  "KEY_UNKNOWN": {
+    "key_code": 240
+  },
+  "KEY_VIDEO_NEXT": {
+    "key_code": 241,
+    "comment": "drive next video source"
+  },
+  "KEY_VIDEO_PREV": {
+    "key_code": 242,
+    "comment": "drive previous video source"
+  },
+  "KEY_BRIGHTNESS_CYCLE": {
+    "key_code": 243,
+    "comment": "brightness up, after max is min"
+  },
+  "KEY_BRIGHTNESS_AUTO": {
+    "key_code": 244,
+    "comment": "Set Auto Brightness: manual"
+  },
+  "KEY_DISPLAY_OFF": {
+    "key_code": 245,
+    "comment": "display device to off state"
+  },
+  "KEY_WWAN": {
+    "key_code": 246,
+    "comment": "Wireless WAN (LTE, UMTS, GSM, etc.)"
+  },
+  "KEY_RFKILL": {
+    "key_code": 247,
+    "comment": "Key that controls all radios"
+  },
+  "KEY_MICMUTE": {
+    "key_code": 248,
+    "comment": "Mute / unmute the microphone"
+  },
+  "BTN_MISC": {
+    "key_code": 256
+  },
+  "BTN_MOUSE": {
+    "key_code": 272
+  },
+  "BTN_LEFT": {
+    "key_code": 272
+  },
+  "BTN_RIGHT": {
+    "key_code": 273
+  },
+  "BTN_MIDDLE": {
+    "key_code": 274
+  },
+  "BTN_SIDE": {
+    "key_code": 275
+  },
+  "BTN_EXTRA": {
+    "key_code": 276
+  },
+  "BTN_FORWARD": {
+    "key_code": 277
+  },
+  "BTN_BACK": {
+    "key_code": 278
+  },
+  "BTN_TASK": {
+    "key_code": 279
+  },
+  "BTN_TRIGGER": {
+    "key_code": 288
+  },
+  "BTN_JOYSTICK": {
+    "key_code": 288
+  },
+  "BTN_THUMB": {
+    "key_code": 289
+  },
+  "BTN_TOP": {
+    "key_code": 291
+  },
+  "BTN_PINKIE": {
+    "key_code": 293
+  },
+  "BTN_BASE": {
+    "key_code": 294
+  },
+  "BTN_DEAD": {
+    "key_code": 303
+  },
+  "BTN_SOUTH": {
+    "key_code": 304
+  },
+  "BTN_GAMEPAD": {
+    "key_code": 304
+  },
+  "BTN_EAST": {
+    "key_code": 305
+  },
+  "BTN_C": {
+    "key_code": 306
+  },
+  "BTN_NORTH": {
+    "key_code": 307
+  },
+  "BTN_WEST": {
+    "key_code": 308
+  },
+  "BTN_Z": {
+    "key_code": 309
+  },
+  "BTN_TL": {
+    "key_code": 310
+  },
+  "BTN_TR": {
+    "key_code": 311
+  },
+  "BTN_SELECT": {
+    "key_code": 314
+  },
+  "BTN_START": {
+    "key_code": 315
+  },
+  "BTN_MODE": {
+    "key_code": 316
+  },
+  "BTN_THUMBL": {
+    "key_code": 317
+  },
+  "BTN_THUMBR": {
+    "key_code": 318
+  },
+  "BTN_DIGI": {
+    "key_code": 320
+  },
+  "BTN_TOOL_PEN": {
+    "key_code": 320
+  },
+  "BTN_TOOL_RUBBER": {
+    "key_code": 321
+  },
+  "BTN_TOOL_BRUSH": {
+    "key_code": 322
+  },
+  "BTN_TOOL_PENCIL": {
+    "key_code": 323
+  },
+  "BTN_TOOL_AIRBRUSH": {
+    "key_code": 324
+  },
+  "BTN_TOOL_FINGER": {
+    "key_code": 325
+  },
+  "BTN_TOOL_MOUSE": {
+    "key_code": 326
+  },
+  "BTN_TOOL_LENS": {
+    "key_code": 327
+  },
+  "BTN_TOOL_QUINTTAP": {
+    "key_code": 328,
+    "comment": "Five fingers on trackpad"
+  },
+  "BTN_TOUCH": {
+    "key_code": 330
+  },
+  "BTN_STYLUS": {
+    "key_code": 331
+  },
+  "BTN_TOOL_DOUBLETAP": {
+    "key_code": 333
+  },
+  "BTN_TOOL_TRIPLETAP": {
+    "key_code": 334
+  },
+  "BTN_TOOL_QUADTAP": {
+    "key_code": 335,
+    "comment": "Four fingers on trackpad"
+  },
+  "BTN_GEAR_DOWN": {
+    "key_code": 336
+  },
+  "BTN_WHEEL": {
+    "key_code": 336
+  },
+  "BTN_GEAR_UP": {
+    "key_code": 337
+  },
+  "KEY_OK": {
+    "key_code": 352
+  },
+  "KEY_SELECT": {
+    "key_code": 353
+  },
+  "KEY_GOTO": {
+    "key_code": 354
+  },
+  "KEY_CLEAR": {
+    "key_code": 355
+  },
+  "KEY_OPTION": {
+    "key_code": 357
+  },
+  "KEY_INFO": {
+    "key_code": 358,
+    "comment": "AL OEM Features/Tips/Tutorial"
+  },
+  "KEY_TIME": {
+    "key_code": 359
+  },
+  "KEY_VENDOR": {
+    "key_code": 360
+  },
+  "KEY_ARCHIVE": {
+    "key_code": 361
+  },
+  "KEY_PROGRAM": {
+    "key_code": 362,
+    "comment": "Media Select Program Guide"
+  },
+  "KEY_CHANNEL": {
+    "key_code": 363
+  },
+  "KEY_FAVORITES": {
+    "key_code": 364
+  },
+  "KEY_EPG": {
+    "key_code": 365
+  },
+  "KEY_PVR": {
+    "key_code": 366,
+    "comment": "Media Select Home"
+  },
+  "KEY_MHP": {
+    "key_code": 367
+  },
+  "KEY_LANGUAGE": {
+    "key_code": 368
+  },
+  "KEY_TITLE": {
+    "key_code": 369
+  },
+  "KEY_SUBTITLE": {
+    "key_code": 370
+  },
+  "KEY_ANGLE": {
+    "key_code": 371
+  },
+  "KEY_FULL_SCREEN": {
+    "key_code": 372,
+    "comment": "AC View Toggle"
+  },
+  "KEY_MODE": {
+    "key_code": 373
+  },
+  "KEY_KEYBOARD": {
+    "key_code": 374
+  },
+  "KEY_ASPECT_RATIO": {
+    "key_code": 375,
+    "comment": "HUTRR37: Aspect"
+  },
+  "KEY_PC": {
+    "key_code": 376,
+    "comment": "Media Select Computer"
+  },
+  "KEY_TV": {
+    "key_code": 377,
+    "comment": "Media Select TV"
+  },
+  "KEY_VCR": {
+    "key_code": 379,
+    "comment": "Media Select VCR"
+  },
+  "KEY_SAT": {
+    "key_code": 381,
+    "comment": "Media Select Satellite"
+  },
+  "KEY_CD": {
+    "key_code": 383,
+    "comment": "Media Select CD"
+  },
+  "KEY_TAPE": {
+    "key_code": 384,
+    "comment": "Media Select Tape"
+  },
+  "KEY_RADIO": {
+    "key_code": 385
+  },
+  "KEY_TUNER": {
+    "key_code": 386,
+    "comment": "Media Select Tuner"
+  },
+  "KEY_PLAYER": {
+    "key_code": 387
+  },
+  "KEY_TEXT": {
+    "key_code": 388
+  },
+  "KEY_DVD": {
+    "key_code": 389,
+    "comment": "Media Select DVD"
+  },
+  "KEY_AUX": {
+    "key_code": 390
+  },
+  "KEY_AUDIO": {
+    "key_code": 392,
+    "comment": "AL Audio Browser"
+  },
+  "KEY_VIDEO": {
+    "key_code": 393,
+    "comment": "AL Movie Browser"
+  },
+  "KEY_DIRECTORY": {
+    "key_code": 394
+  },
+  "KEY_LIST": {
+    "key_code": 395
+  },
+  "KEY_MEMO": {
+    "key_code": 396,
+    "comment": "Media Select Messages"
+  },
+  "KEY_CALENDAR": {
+    "key_code": 397
+  },
+  "KEY_RED": {
+    "key_code": 398
+  },
+  "KEY_GREEN": {
+    "key_code": 399
+  },
+  "KEY_YELLOW": {
+    "key_code": 400
+  },
+  "KEY_BLUE": {
+    "key_code": 401
+  },
+  "KEY_CHANNELUP": {
+    "key_code": 402,
+    "comment": "Channel Increment"
+  },
+  "KEY_CHANNELDOWN": {
+    "key_code": 403,
+    "comment": "Channel Decrement"
+  },
+  "KEY_FIRST": {
+    "key_code": 404
+  },
+  "KEY_LAST": {
+    "key_code": 405,
+    "comment": "Recall Last"
+  },
+  "KEY_AB": {
+    "key_code": 406
+  },
+  "KEY_NEXT": {
+    "key_code": 407
+  },
+  "KEY_RESTART": {
+    "key_code": 408
+  },
+  "KEY_SLOW": {
+    "key_code": 409
+  },
+  "KEY_SHUFFLE": {
+    "key_code": 410
+  },
+  "KEY_BREAK": {
+    "key_code": 411
+  },
+  "KEY_PREVIOUS": {
+    "key_code": 412
+  },
+  "KEY_DIGITS": {
+    "key_code": 413
+  },
+  "KEY_TEEN": {
+    "key_code": 414
+  },
+  "KEY_TWEN": {
+    "key_code": 415
+  },
+  "KEY_VIDEOPHONE": {
+    "key_code": 416,
+    "comment": "Media Select Video Phone"
+  },
+  "KEY_GAMES": {
+    "key_code": 417,
+    "comment": "Media Select Games"
+  },
+  "KEY_ZOOMIN": {
+    "key_code": 418,
+    "comment": "AC Zoom In"
+  },
+  "KEY_ZOOMOUT": {
+    "key_code": 419,
+    "comment": "AC Zoom Out"
+  },
+  "KEY_ZOOMRESET": {
+    "key_code": 420,
+    "comment": "AC Zoom"
+  },
+  "KEY_WORDPROCESSOR": {
+    "key_code": 421,
+    "comment": "AL Word Processor"
+  },
+  "KEY_EDITOR": {
+    "key_code": 422,
+    "comment": "AL Text Editor"
+  },
+  "KEY_SPREADSHEET": {
+    "key_code": 423,
+    "comment": "AL Spreadsheet"
+  },
+  "KEY_GRAPHICSEDITOR": {
+    "key_code": 424,
+    "comment": "AL Graphics Editor"
+  },
+  "KEY_PRESENTATION": {
+    "key_code": 425,
+    "comment": "AL Presentation App"
+  },
+  "KEY_DATABASE": {
+    "key_code": 426,
+    "comment": "AL Database App"
+  },
+  "KEY_NEWS": {
+    "key_code": 427,
+    "comment": "AL Newsreader"
+  },
+  "KEY_VOICEMAIL": {
+    "key_code": 428,
+    "comment": "AL Voicemail"
+  },
+  "KEY_ADDRESSBOOK": {
+    "key_code": 429,
+    "comment": "AL Contacts/Address Book"
+  },
+  "KEY_MESSENGER": {
+    "key_code": 430,
+    "comment": "AL Instant Messaging"
+  },
+  "KEY_DISPLAYTOGGLE": {
+    "key_code": 431,
+    "comment": "Turn display (LCD) on and off"
+  },
+  "KEY_SPELLCHECK": {
+    "key_code": 432,
+    "comment": "AL Spell Check"
+  },
+  "KEY_LOGOFF": {
+    "key_code": 433,
+    "comment": "AL Logoff"
+  },
+  "KEY_DOLLAR": {
+    "key_code": 434
+  },
+  "KEY_EURO": {
+    "key_code": 435
+  },
+  "KEY_FRAMEBACK": {
+    "key_code": 436,
+    "comment": "Consumer - transport controls"
+  },
+  "KEY_FRAMEFORWARD": {
+    "key_code": 437
+  },
+  "KEY_CONTEXT_MENU": {
+    "key_code": 438,
+    "comment": "GenDesc - system context menu"
+  },
+  "KEY_MEDIA_REPEAT": {
+    "key_code": 439,
+    "comment": "Consumer - transport control"
+  },
+  "KEY_IMAGES": {
+    "key_code": 442,
+    "comment": "AL Image Browser"
+  },
+  "KEY_NOTIFICATION_CENTER": {
+    "key_code": 444,
+    "comment": "Show/hide the notification center"
+  },
+  "KEY_PICKUP_PHONE": {
+    "key_code": 445,
+    "comment": "Answer incoming call"
+  },
+  "KEY_HANGUP_PHONE": {
+    "key_code": 446,
+    "comment": "Decline incoming call"
+  },
+  "KEY_LINK_PHONE": {
+    "key_code": 447,
+    "comment": "AL Phone Syncing"
+  },
+  "KEY_DEL_EOL": {
+    "key_code": 448
+  },
+  "KEY_DEL_EOS": {
+    "key_code": 449
+  },
+  "KEY_INS_LINE": {
+    "key_code": 450
+  },
+  "KEY_DEL_LINE": {
+    "key_code": 451
+  },
+  "KEY_FN": {
+    "key_code": 464
+  },
+  "KEY_FN_ESC": {
+    "key_code": 465
+  },
+  "KEY_FN_D": {
+    "key_code": 480
+  },
+  "KEY_FN_E": {
+    "key_code": 481
+  },
+  "KEY_FN_F": {
+    "key_code": 482
+  },
+  "KEY_FN_S": {
+    "key_code": 483
+  },
+  "KEY_FN_B": {
+    "key_code": 484
+  },
+  "KEY_FN_RIGHT_SHIFT": {
+    "key_code": 485
+  },
+  "KEY_NUMERIC_STAR": {
+    "key_code": 522
+  },
+  "KEY_NUMERIC_POUND": {
+    "key_code": 523
+  },
+  "KEY_NUMERIC_A": {
+    "key_code": 524,
+    "comment": "Phone key A - HUT Telephony 0xb9"
+  },
+  "KEY_NUMERIC_B": {
+    "key_code": 525
+  },
+  "KEY_NUMERIC_C": {
+    "key_code": 526
+  },
+  "KEY_NUMERIC_D": {
+    "key_code": 527
+  },
+  "KEY_CAMERA_FOCUS": {
+    "key_code": 528
+  },
+  "KEY_WPS_BUTTON": {
+    "key_code": 529,
+    "comment": "WiFi Protected Setup key"
+  },
+  "KEY_TOUCHPAD_TOGGLE": {
+    "key_code": 530,
+    "comment": "Request switch touchpad on or off"
+  },
+  "KEY_TOUCHPAD_ON": {
+    "key_code": 531
+  },
+  "KEY_TOUCHPAD_OFF": {
+    "key_code": 532
+  },
+  "KEY_CAMERA_ZOOMIN": {
+    "key_code": 533
+  },
+  "KEY_CAMERA_ZOOMOUT": {
+    "key_code": 534
+  },
+  "KEY_CAMERA_UP": {
+    "key_code": 535
+  },
+  "KEY_CAMERA_DOWN": {
+    "key_code": 536
+  },
+  "KEY_CAMERA_LEFT": {
+    "key_code": 537
+  },
+  "KEY_CAMERA_RIGHT": {
+    "key_code": 538
+  },
+  "KEY_ATTENDANT_ON": {
+    "key_code": 539
+  },
+  "KEY_ATTENDANT_OFF": {
+    "key_code": 540
+  },
+  "KEY_ATTENDANT_TOGGLE": {
+    "key_code": 541,
+    "comment": "Attendant call on or off"
+  },
+  "KEY_LIGHTS_TOGGLE": {
+    "key_code": 542,
+    "comment": "Reading light on or off"
+  },
+  "BTN_DPAD_UP": {
+    "key_code": 544
+  },
+  "BTN_DPAD_DOWN": {
+    "key_code": 545
+  },
+  "BTN_DPAD_LEFT": {
+    "key_code": 546
+  },
+  "BTN_DPAD_RIGHT": {
+    "key_code": 547
+  },
+  "KEY_ALS_TOGGLE": {
+    "key_code": 560,
+    "comment": "Ambient light sensor"
+  },
+  "KEY_ROTATE_LOCK_TOGGLE": {
+    "key_code": 561,
+    "comment": "Display rotation lock"
+  },
+  "KEY_REFRESH_RATE_TOGGLE": {
+    "key_code": 562,
+    "comment": "Display refresh rate toggle"
+  },
+  "KEY_BUTTONCONFIG": {
+    "key_code": 576,
+    "comment": "AL Button Configuration"
+  },
+  "KEY_TASKMANAGER": {
+    "key_code": 577,
+    "comment": "AL Task/Project Manager"
+  },
+  "KEY_JOURNAL": {
+    "key_code": 578,
+    "comment": "AL Log/Journal/Timecard"
+  },
+  "KEY_CONTROLPANEL": {
+    "key_code": 579,
+    "comment": "AL Control Panel"
+  },
+  "KEY_APPSELECT": {
+    "key_code": 580,
+    "comment": "AL Select Task/Application"
+  },
+  "KEY_SCREENSAVER": {
+    "key_code": 581,
+    "comment": "AL Screen Saver"
+  },
+  "KEY_VOICECOMMAND": {
+    "key_code": 582,
+    "comment": "Listening Voice Command"
+  },
+  "KEY_ASSISTANT": {
+    "key_code": 583,
+    "comment": "AL Context-aware desktop assistant"
+  },
+  "KEY_KBD_LAYOUT_NEXT": {
+    "key_code": 584,
+    "comment": "AC Next Keyboard Layout Select"
+  },
+  "KEY_EMOJI_PICKER": {
+    "key_code": 585,
+    "comment": "Show/hide emoji picker (HUTRR101)"
+  },
+  "KEY_DICTATE": {
+    "key_code": 586,
+    "comment": "Start or Stop Voice Dictation Session (HUTRR99)"
+  },
+  "KEY_CAMERA_ACCESS_ENABLE": {
+    "key_code": 587,
+    "comment": "Enables programmatic access to camera devices. (HUTRR72)"
+  },
+  "KEY_CAMERA_ACCESS_DISABLE": {
+    "key_code": 588,
+    "comment": "Disables programmatic access to camera devices. (HUTRR72)"
+  },
+  "KEY_CAMERA_ACCESS_TOGGLE": {
+    "key_code": 589,
+    "comment": "Toggles the current state of the camera access control. (HUTRR72)"
+  },
+  "KEY_ACCESSIBILITY": {
+    "key_code": 590,
+    "comment": "Toggles the system bound accessibility UI/command (HUTRR116)"
+  },
+  "KEY_DO_NOT_DISTURB": {
+    "key_code": 591,
+    "comment": "Toggles the system-wide \"Do Not Disturb\" control (HUTRR94)"
+  },
+  "KEY_BRIGHTNESS_MIN": {
+    "key_code": 592,
+    "comment": "Set Brightness to Minimum"
+  },
+  "KEY_BRIGHTNESS_MAX": {
+    "key_code": 593,
+    "comment": "Set Brightness to Maximum"
+  },
+  "KEY_KBDINPUTASSIST_PREV": {
+    "key_code": 608
+  },
+  "KEY_KBDINPUTASSIST_NEXT": {
+    "key_code": 609
+  },
+  "KEY_KBDINPUTASSIST_PREVGROUP": {
+    "key_code": 610
+  },
+  "KEY_KBDINPUTASSIST_NEXTGROUP": {
+    "key_code": 611
+  },
+  "KEY_KBDINPUTASSIST_ACCEPT": {
+    "key_code": 612
+  },
+  "KEY_KBDINPUTASSIST_CANCEL": {
+    "key_code": 613
+  },
+  "KEY_RIGHT_UP": {
+    "key_code": 614
+  },
+  "KEY_RIGHT_DOWN": {
+    "key_code": 615
+  },
+  "KEY_LEFT_UP": {
+    "key_code": 616
+  },
+  "KEY_LEFT_DOWN": {
+    "key_code": 617
+  },
+  "KEY_ROOT_MENU": {
+    "key_code": 618,
+    "comment": "Show Device\u0027s Root Menu"
+  },
+  "KEY_MEDIA_TOP_MENU": {
+    "key_code": 619
+  },
+  "KEY_AUDIO_DESC": {
+    "key_code": 622
+  },
+  "KEY_NEXT_FAVORITE": {
+    "key_code": 624
+  },
+  "KEY_STOP_RECORD": {
+    "key_code": 625
+  },
+  "KEY_PAUSE_RECORD": {
+    "key_code": 626
+  },
+  "KEY_VOD": {
+    "key_code": 627,
+    "comment": "Video on Demand"
+  },
+  "KEY_UNMUTE": {
+    "key_code": 628
+  },
+  "KEY_FASTREVERSE": {
+    "key_code": 629
+  },
+  "KEY_SLOWREVERSE": {
+    "key_code": 630
+  },
+  "KEY_DATA": {
+    "key_code": 631
+  },
+  "KEY_ONSCREEN_KEYBOARD": {
+    "key_code": 632
+  },
+  "KEY_PRIVACY_SCREEN_TOGGLE": {
+    "key_code": 633
+  },
+  "KEY_SELECTIVE_SCREENSHOT": {
+    "key_code": 634
+  },
+  "KEY_NEXT_ELEMENT": {
+    "key_code": 635
+  },
+  "KEY_PREVIOUS_ELEMENT": {
+    "key_code": 636
+  },
+  "KEY_AUTOPILOT_ENGAGE_TOGGLE": {
+    "key_code": 637
+  },
+  "KEY_MARK_WAYPOINT": {
+    "key_code": 638
+  },
+  "KEY_SOS": {
+    "key_code": 639
+  },
+  "KEY_NAV_CHART": {
+    "key_code": 640
+  },
+  "KEY_FISHING_CHART": {
+    "key_code": 641
+  },
+  "KEY_SINGLE_RANGE_RADAR": {
+    "key_code": 642
+  },
+  "KEY_DUAL_RANGE_RADAR": {
+    "key_code": 643
+  },
+  "KEY_RADAR_OVERLAY": {
+    "key_code": 644
+  },
+  "KEY_TRADITIONAL_SONAR": {
+    "key_code": 645
+  },
+  "KEY_CLEARVU_SONAR": {
+    "key_code": 646
+  },
+  "KEY_SIDEVU_SONAR": {
+    "key_code": 647
+  },
+  "KEY_NAV_INFO": {
+    "key_code": 648
+  },
+  "KEY_BRIGHTNESS_MENU": {
+    "key_code": 649
+  },
+  "KEY_MACRO_RECORD_START": {
+    "key_code": 688
+  },
+  "KEY_MACRO_RECORD_STOP": {
+    "key_code": 689
+  },
+  "KEY_MACRO_PRESET_CYCLE": {
+    "key_code": 690
+  },
+  "BTN_TRIGGER_HAPPY": {
+    "key_code": 704
+  },
+  "KEY_MAX": {
+    "key_code": 767
+  }
+}
