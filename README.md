@@ -129,6 +129,12 @@ Program creates two files in the current directory by default:
 - Ubuntu 24.04 LTS
 - Kali Linux 2025.3
 
+## TODO
+
+1. Graphical User Interface (GUI) for easier configuration.
+2. Automatic installation script (for daemonizing the driver on system startup).
+3. User keymaps to remap pen buttons.
+
 ## Contributing
 
 Contributions are welcome! If you find a bug or want to add a new feature, please open an issue or submit a pull request 
