@@ -25,7 +25,10 @@ This graphical tablet looks like this...
 9. The driver does not detach the tablet’s built-in storage (often used to store Windows drivers and manuals). 
 I don't know how you can use this, but it can.
 10. Automatically fetches keycodes from your system.
-11. Easy to install and configure.
+11. Automatically re-attaches kernel driver on exit.
+12. Supports multiple tablets connected.
+13. Automatically connects to the tablet when it is plugged in.
+14. Easy to install and configure.
 
 ## Installation
 
