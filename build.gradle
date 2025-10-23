@@ -1,13 +1,22 @@
 plugins {
     id 'java'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 group = 'ru.aloyenz.t501.driver'
-version = '1.0-SNAPSHOT'
+version = '1.0.0-BETA'
 def libusbSo = '/usr/lib/x86_64-linux-gnu/libusb-1.0.so'
 
 repositories {
     mavenCentral()
+}
+
+configurations {
+    implementation {
+        canBeResolved = true
+    }
+
+    shaded
 }
 
 dependencies {
@@ -17,27 +26,61 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.usb4java/usb4java
     implementation 'org.usb4java:usb4java:1.3.0'
+    shaded 'org.usb4java:usb4java:1.3.0'
 
     implementation 'com.google.code.gson:gson:2.13.2'
+    shaded 'com.google.code.gson:gson:2.13.2'
 
     implementation 'org.slf4j:slf4j-api:2.0.13'
     runtimeOnly 'org.slf4j:slf4j-simple:2.0.13'
+
+    shaded 'org.slf4j:slf4j-api:2.0.13'
+    shaded 'org.slf4j:slf4j-simple:2.0.13'
 }
 
-tasks.register('generateHeaders', Exec) {
+tasks.register("cleanupCompiledClasses", Delete) {
+    description = "Clean up compiled classes after JNI header generation"
+    delete files("src/main/java/ru/aloyenz/t501/driver/virtual/VPen.class",
+                 "src/main/java/ru/aloyenz/t501/driver/virtual/VKeyboard.class",
+                 "src/main/java/ru/aloyenz/t501/driver/virtual/VMouse.class")
+    mustRunAfter generateAllHeaders
+}
+
+tasks.register('generateVMouseHeader', Exec) {
     dependsOn compileJava
-    description = 'Generate JNI header files'
+    description = 'Generate JNI header for VMouse'
     def outputDir = file("src/main/c")
-    commandLine "javac", "-h", outputDir, "src/main/java/ru/aloyenz/t501/driver/LibUsbDeattacher.java"
+    commandLine "javac", "-h", outputDir, "src/main/java/ru/aloyenz/t501/driver/virtual/VMouse.java"
 }
 
-tasks.register('buildNativeLibs') {
+tasks.register('generateVPenHeader', Exec) {
+    dependsOn compileJava
+    description = 'Generate JNI header for VPen'
+    def outputDir = file("src/main/c")
+    commandLine "javac", "-h", outputDir, "src/main/java/ru/aloyenz/t501/driver/virtual/VPen.java"
+}
+
+tasks.register('generateVKeyboardHeader', Exec) {
+    dependsOn compileJava
+    description = 'Generate JNI header for VKeyboard'
+    def outputDir = file("src/main/c")
+    commandLine "javac", "-h", outputDir, "src/main/java/ru/aloyenz/t501/driver/virtual/VKeyboard.java"
+}
+
+tasks.register('generateAllHeaders') {
+    description = 'Generate all JNI header files'
+    dependsOn generateVMouseHeader, generateVPenHeader, generateVKeyboardHeader
+}
+
+tasks.register('buildAllNativeLibs') {
     description = 'Compile native JNI libraries'
     dependsOn buildVPenLib, buildVKeyboardLib, buildVMouseLib
+    finalizedBy cleanupCompiledClasses
 }
 
 tasks.register('buildVPenLib', Exec) {
     description = 'Build libvpen.so'
+    dependsOn generateVPenHeader
     def outputDir = file("$buildDir/native")
     outputs.dir(outputDir)
     doFirst { outputDir.mkdirs() }
@@ -62,6 +105,7 @@ tasks.register('buildVPenLib', Exec) {
 
 tasks.register('buildVKeyboardLib', Exec) {
     description = 'Build libvkeyboard.so'
+    dependsOn generateVKeyboardHeader
     def outputDir = file("$buildDir/native")
     outputs.dir(outputDir)
     doFirst { outputDir.mkdirs() }
@@ -84,6 +128,7 @@ tasks.register('buildVKeyboardLib', Exec) {
 
 tasks.register('buildVMouseLib', Exec) {
     description = 'Build libvmouse.so'
+    dependsOn generateVMouseHeader
     def outputDir = file("$buildDir/native")
     outputs.dir(outputDir)
     doFirst { outputDir.mkdirs() }
@@ -104,6 +149,63 @@ tasks.register('buildVMouseLib', Exec) {
             'src/main/c/libvmouse.c'
 }
 
+tasks.register("copyNativeLibsToResources", Copy) {
+
+    description = "Copy compiled native libraries to resources directory"
+    dependsOn buildAllNativeLibs
+    from("$buildDir/native") {
+        include '*.so'
+    }
+    into 'src/main/resources/native-build/ru/aloyenz/t501/driver/virtual'
+}
+
+tasks.register("deleteGeneratedHeaders", Delete) {
+    delete fileTree("src/main/c") {
+        include '*.h'
+    }
+}
+
+tasks.register("deleteGeneratedNatives", Delete) {
+    delete fileTree("$buildDir/native") {
+        include '*.so'
+    }
+}
+
+tasks.register("deleteCopiedNatives", Delete) {
+    delete "src/main/resources/native-build"
+}
+
+tasks.register("cleanupNativeBuildArtifacts") {
+    dependsOn cleanupCompiledClasses, deleteGeneratedHeaders, deleteGeneratedNatives, deleteCopiedNatives
+}
+
+tasks.named('processResources') {
+    dependsOn copyNativeLibsToResources
+}
+
+tasks.named('jar') {
+    dependsOn copyNativeLibsToResources
+    finalizedBy cleanupNativeBuildArtifacts
+    manifest {
+        attributes(
+            'Main-Class': 'ru.aloyenz.t501.driver.DriverMain'
+        )
+    }
+}
+
+shadowJar {
+
+    mergeServiceFiles()
+
+    dependsOn copyNativeLibsToResources
+    finalizedBy cleanupNativeBuildArtifacts
+
+    archiveBaseName.set('VinsaT501Driver')
+    archiveVersion.set('1.0.0-BETA')
+    archiveClassifier.set('all')
+
+    configurations = [project.configurations.shaded]
+}
 
 test {
     useJUnitPlatform()

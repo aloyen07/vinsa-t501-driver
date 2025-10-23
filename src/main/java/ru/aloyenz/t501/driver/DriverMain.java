@@ -9,10 +9,10 @@ import ru.aloyenz.t501.driver.device.DeviceReader;
 import ru.aloyenz.t501.driver.device.KeyCodesFetcher;
 import ru.aloyenz.t501.driver.device.T501DevicesHandler;
 import ru.aloyenz.t501.driver.exception.InvalidSpecialConfigException;
+import ru.aloyenz.t501.driver.virtual.NativesExtractor;
 import ru.aloyenz.t501.driver.virtual.VKeyboard;
 import ru.aloyenz.t501.driver.virtual.VMouse;
 import ru.aloyenz.t501.driver.virtual.VPen;
-import ru.aloyenz.t501.driver.window.RealTimeGraph;
 
 import javax.swing.*;
 import java.io.File;
@@ -33,14 +33,14 @@ public class DriverMain {
     private static Thread readThread;
     private static Thread replicationThread;
 
-    private static RealTimeGraph realTimeGraph;
-
     private static final T501DevicesHandler HANDLER = new T501DevicesHandler();
     private static final DeviceReader READER = new DeviceReader(HANDLER);
 
     private static long virtualPenHandle = -1;
     private static long virtualKeyboardHandle = -1;
     private static long virtualMouseHandle = -1;
+
+    private static String nativePathPrefix = "native/ru/aloyenz/t501/driver/virtual/";
 
     public static long getVirtualPenHandle() {
         return virtualPenHandle;
@@ -54,18 +54,20 @@ public class DriverMain {
         return virtualMouseHandle;
     }
 
-    public static RealTimeGraph getRealTimeGraph() {
-        return realTimeGraph;
+    public static String getNativePathPrefix() {
+        return nativePathPrefix;
     }
 
     @SuppressWarnings("all")
     public static void main(String[] args) {
 
+        logger.info("T501 Driver version {} by Aloyenz starting...", DRIVER_VERSION);
 
         // Reading args
         String configPath = "t501_driver_config.json";
         String userHeadersPath = null;
         String userKeycodesCachePath = "keycodes.json";
+        String nativeLibPathPrefix = "native/ru/aloyenz/t501/driver/virtual/";
         boolean forceFetchKeycodes = false;
 
         for (int i = 0; i < args.length - 1; i++) {
@@ -96,9 +98,39 @@ public class DriverMain {
                 }
             }
 
+            if (args[i].equalsIgnoreCase("--native-lib-path-prefix")) {
+                if (i + 1 < args.length) {
+                    nativeLibPathPrefix = args[i + 1];
+                } else {
+                    logger.error("No native library path prefix provided after --native-lib-path-prefix");
+                    return;
+                }
+            }
+
             if (args[i].equalsIgnoreCase("--force-fetch-keycodes")) {
                 forceFetchKeycodes = true;
             }
+        }
+
+        if (!nativeLibPathPrefix.endsWith("/")) {
+            nativeLibPathPrefix += "/";
+        }
+
+        DriverMain.nativePathPrefix = nativeLibPathPrefix;
+
+        File f = new File(nativePathPrefix);
+        if (!f.exists()) {
+            if (!f.mkdirs()) {
+                logger.warn("Failed to create native library directory: {}", nativePathPrefix);
+            }
+        }
+
+        // Extracting native libraries
+        try {
+            NativesExtractor.extract();
+        } catch (IOException e) {
+            logger.error("Failed to extract native libraries: {}", e.getMessage(), e);
+            return;
         }
 
         // Reading keycodes
@@ -131,14 +163,35 @@ public class DriverMain {
         }
 
         // Initializing virtual pen
-        logger.info("Initializing virtual pen...");
-        virtualPenHandle = VPen.initialize(Configuration.getInstance().penName);
-        virtualKeyboardHandle = VKeyboard.initialize(Configuration.getInstance().keyboardName,
-                KeyCodesFetcher.getNeededKeycodes(
-                        Configuration.getInstance().keyboardConfiguration,
-                        Configuration.getInstance().specialButtonsConfiguration
-                ));
-        virtualMouseHandle = VMouse.initialize(Configuration.getInstance().mouseName);
+        logger.info("Initializing virtual pen, keyboard and mouse...");
+        try {
+            virtualPenHandle = VPen.initialize(Configuration.getInstance().penName);
+            virtualKeyboardHandle = VKeyboard.initialize(Configuration.getInstance().keyboardName,
+                    KeyCodesFetcher.getNeededKeycodes(
+                            Configuration.getInstance().keyboardConfiguration,
+                            Configuration.getInstance().specialButtonsConfiguration
+                    ));
+            virtualMouseHandle = VMouse.initialize(Configuration.getInstance().mouseName);
+        } catch (UnsatisfiedLinkError e) {
+            // Native library not found or failed to load
+            logger.error("Native library is not found or failed to load: {}.", e.getMessage(), e);
+            logger.error("PLEASE, before write a bug report, make this steps...");
+            logger.error("1. If you didn't defined native library path, define it using java argument...");
+            String tipString = "|   java -Djava.library.path=" + nativeLibPathPrefix + " <your other arguments>   |";
+            String border = "-".repeat(tipString.length());
+            String emptyBorder = "|" + " ".repeat(tipString.length() - 2) + "|";
+
+            logger.error(border);
+            logger.error(emptyBorder);
+            logger.error(tipString);
+            logger.error(emptyBorder);
+            logger.error(border);
+
+            logger.error("2. Make sure that the native libraries are compatible with your architecture.");
+            logger.error("3. Make sure that the extracted native libraries are not blocked by your OS. Program extract them automatically to '{}'.", nativePathPrefix);
+            logger.error("If the problem still occurs, please, write a bug report including above information.");
+            return;
+        }
         if (virtualPenHandle <= -1) {
             logger.error("Failed to initialize virtual pen. Error code: {}", virtualPenHandle);
             return;
@@ -160,7 +213,6 @@ public class DriverMain {
         }
 
         // Initializing virtual pen
-
 
         findDevice();
         if (HANDLER.isEmpty()) {
@@ -241,14 +293,6 @@ public class DriverMain {
         readThread.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(DriverMain::stop));
-
-
-        JFrame frame = new JFrame("Real-Time Graph");
-        realTimeGraph = new RealTimeGraph();
-        frame.add(realTimeGraph);
-        frame.setSize(800, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
     }
 
     private static void findDevice() {
@@ -297,6 +341,11 @@ public class DriverMain {
         readThread.interrupt();
         try {
             readThread.join();
+        } catch (InterruptedException ignored) {}
+
+        replicationThread.interrupt();
+        try {
+            replicationThread.join();
         } catch (InterruptedException ignored) {}
 
         // Reattaching kernel drivers for alive devices
