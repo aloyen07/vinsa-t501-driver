@@ -108,7 +108,7 @@ cd vinsa-t501-driver
 3. Build the JAR file using Gradle:
 ```shell
 chmod +x gradlew
-./gradlew clean build
+./gradlew clean shadowJar
 ```
 4. The built JAR file will be located in the `build/libs/` directory.
 
